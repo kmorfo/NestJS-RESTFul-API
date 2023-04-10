@@ -26,3 +26,8 @@ yarn start:dev
 ```
 http://localhost:3000/api/seed
 ```
+8. Documentación con OpenAPI
+```
+http://localhost:3000/api/
+```
+9. Documentación con 
