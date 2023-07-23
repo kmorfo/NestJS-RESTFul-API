@@ -1,9 +1,9 @@
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport'
-import { Controller, Get, Post, Body, UseGuards, Req, SetMetadata } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Req, SetMetadata, Param } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
-import { CreateUserDto, LoginUserDto } from './dto';
+import { CreateUserDto, LoginUserDto, ResetPasswordDto } from './dto';
 import { GetUser, GetRawHeaders, RoleProtected, Auth } from './decorators';
 import { User } from './entities/user.entity';
 import { UserRoleGuard } from './guards/user-role/user-role.guard';
@@ -38,6 +38,26 @@ export class AuthController {
     //En caso de querer quitar info lo podriamos hacer con la desectructuracion como en el login
     return this.authService.checkAuthStatus(user);
   }
+
+  @Get('forgot-password/:email')
+  @ApiResponse({ status: 200, description: 'Email send', type: Boolean })
+  @ApiResponse({ status: 401, description: 'Email does not exist' })
+  public async sendEmailForgotPassword(@Param('email') email: string) {
+    return await this.authService.forgotPassword(email);
+  }
+
+  @Get('reset-password/:token')
+  @ApiResponse({ status: 200, description: 'User reset password correct', type: User })
+  @ApiResponse({ status: 401, description: 'Token is not valid' })
+  public async resetPasswordToken(
+    @Body() resetPasswordDto: ResetPasswordDto,
+    @Param('token') token: string
+    ) {
+    console.log(token);
+    return await this.authService.resetPasswordToken(token,resetPasswordDto);
+  }
+
+  
 
   @ApiResponse({status:201, description:'Access to private site',type:User})
   @ApiResponse({status:401, description:'Bearer token is not valid'})
