@@ -9,7 +9,7 @@ import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
 import { Product, ProductImage } from './entities';
-import { User } from 'src/auth/entities/user.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class ProductsService {

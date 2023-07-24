@@ -7,15 +7,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { User } from './entities/user.entity';
+
 import { MailModule } from 'src/mail/mail.module';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
   controllers: [AuthController],
   providers: [AuthService,JwtStrategy],
   imports: [
     ConfigModule,
-    TypeOrmModule.forFeature([User]),
+    UsersModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     //Creacion del modulo de forma asincrona para que espere a que se obtengan los datos 
     JwtModule.registerAsync({
@@ -37,6 +38,6 @@ import { MailModule } from 'src/mail/mail.module';
     // })
     MailModule
   ],
-  exports: [TypeOrmModule,JwtStrategy,PassportModule,JwtModule,]
+  exports: [JwtStrategy,PassportModule,JwtModule,]
 })
 export class AuthModule { }

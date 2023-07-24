@@ -12,6 +12,7 @@ import { FilesModule } from './files/files.module';
 import { AuthModule } from './auth/auth.module';
 import { MessagesWsModule } from './messages-ws/messages-ws.module';
 import { MailModule } from './mail/mail.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -44,7 +45,8 @@ import { MailModule } from './mail/mail.module';
     FilesModule,
     AuthModule,
     MessagesWsModule,
-    MailModule
+    MailModule,
+    UsersModule
   ],
   controllers: [],
   providers: []

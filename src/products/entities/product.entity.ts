@@ -2,7 +2,7 @@ import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, OneToMany, Prima
 import { ApiProperty } from "@nestjs/swagger";
 
 import { ProductImage } from ".";
-import { User } from "src/auth/entities/user.entity";
+import { User } from "src/users/entities/user.entity";
 
 
 @Entity({ name: 'products' })

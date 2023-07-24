@@ -7,7 +7,7 @@ import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { Product } from './entities';
 import { ProductsService } from './products.service';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { User } from 'src/auth/entities/user.entity';
+import { User } from 'src/users/entities/user.entity';
 import { ValidRoles } from 'src/auth/interfaces';
 
 @ApiTags('Products')

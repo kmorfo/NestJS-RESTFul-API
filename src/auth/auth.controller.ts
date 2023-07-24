@@ -5,9 +5,10 @@ import { Controller, Get, Post, Body, UseGuards, Req, SetMetadata, Param } from 
 import { AuthService } from './auth.service';
 import { CreateUserDto, LoginUserDto, ResetPasswordDto } from './dto';
 import { GetUser, GetRawHeaders, RoleProtected, Auth } from './decorators';
-import { User } from './entities/user.entity';
+
 import { UserRoleGuard } from './guards/user-role/user-role.guard';
 import { ValidRoles } from './interfaces';
+import { User } from 'src/users/entities/user.entity';
 
 @ApiTags('Auth')
 @Controller('auth')
