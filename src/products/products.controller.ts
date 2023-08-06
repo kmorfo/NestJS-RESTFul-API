@@ -20,16 +20,16 @@ export class ProductsController {
     return this.productsService.findAll(paginationDto);
   }
 
-  @Get(':term') 
+  @Get(':term')
   findOne(@Param('term') term: string) {
     return this.productsService.findOnePlain(term);
   }
 
   @Post()
   @Auth()
-  @ApiResponse({status:201, description:'Product was created',type:Product})
-  @ApiResponse({status:400, description:'Bad request'})
-  @ApiResponse({status:403, description:'Forbidden. Token related.'})
+  @ApiResponse({ status: 201, description: 'Product was created', type: Product })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 403, description: 'Forbidden. Token related.' })
   create(
     @Body() createProductDto: CreateProductDto,
     @GetUser() user: User) {
@@ -38,16 +38,24 @@ export class ProductsController {
 
   @Patch(':id')
   @Auth()
+  @ApiResponse({ status: 200, description: 'Product was updated', type: Product })
+  @ApiResponse({ status: 400, description: 'Validation failed (uuid is expected)' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateProductDto: UpdateProductDto,
     @GetUser() user: User
   ) {
-    return this.productsService.update(id, updateProductDto,user);
+    return this.productsService.update(id, updateProductDto, user);
   }
 
   @Delete(':id')
   @Auth(ValidRoles.admin)
+  @ApiResponse({ status: 200, description: 'Product was deleted' })
+  @ApiResponse({ status: 400, description: 'Validation failed (uuid is expected)' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden. User Test One need a valid role: admin.' })
+  @ApiResponse({ status: 404, description: 'Not Found. Product not found.' })
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.productsService.remove(id);
   }

@@ -12,7 +12,8 @@ export class MailService {
 
     //Otra opcion en este caso sin token seria crear una nueva contraseña aleatoria y enviarsela al usuario por mail
     //Luego el dentro de la aplicacion seria el encargado de cambiarla si asi lo desea
-    const urltoken = `${process.env.HOST_API}/auth/reset-password/${token}`;
+    // const urltoken = `${process.env.HOST_API}/auth/reset-password/${token}`;
+    const urltoken = `${process.env.DEEP_LINK}/${token}`;
 
     await this.mailerService.sendMail({
       to: user.email,
