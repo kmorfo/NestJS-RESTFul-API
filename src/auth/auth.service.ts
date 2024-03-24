@@ -100,7 +100,34 @@ export class AuthService {
       throw new InternalServerErrorException('Unexpected error, check server logs');
     }
   }
+  
+  async sendEmailVerification(email: string): Promise<boolean> {
+    const user = await this.usersService.findOneByEmail(email);
+    if (!user) throw new UnauthorizedException('Email does not exist');
 
+    //Here we can check if the user is already verified before send email again
+
+    //Creates a 60 minutes valid token 
+    const token = this.getJwToken({ id: user.id }, { expiresIn: '60 minutes' });
+
+    this.mailService.sendEmailVerification(user, token);
+
+    return true;
+  }
+
+  async verifyEmailToken(token: string): Promise<User> {
+    try {
+      const { id } = this.jwtService.verify(token);
+
+      if (!id) throw new UnauthorizedException('Token is not valid');
+
+      const user = this.usersService.setUserEmailVerified(id);
+
+      return user;
+    } catch (error) {
+      throw new UnauthorizedException('Token is not valid');
+    }
+  }
 
   private handleDBErrors(error: any): never {
     if (error.code === '23505') throw new BadRequestException(error.detail);

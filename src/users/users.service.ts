@@ -56,4 +56,19 @@ export class UsersService {
       throw new InternalServerErrorException('Unexpected error, check server logs');
     }
   }
+
+  async setUserEmailVerified(id: string): Promise<User | undefined> {
+    try {
+      const user = await this.findOneById(id);
+      if (!user) throw new NotFoundException(`User not found`);
+      user.isEmailVerified = true;
+
+      await this.userRepository.save(user);
+
+      return user;
+    } catch (error) {
+      throw new InternalServerErrorException('Unexpected error, check server logs');
+    }
+  }
+
 }

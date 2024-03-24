@@ -25,4 +25,18 @@ export class MailService {
       },
     });
   }
+
+  async sendEmailVerification(user: User, token: string) {
+    const urltoken = `${process.env.VERIFICATION_LINK}/${token}`;
+
+    await this.mailerService.sendMail({
+      to: user.email,
+      subject: 'Email account verification',
+      template: './verifyemail',
+      context: {
+        name: user.fullName,
+        urltoken,
+      },
+    });
+  }
 }

@@ -58,7 +58,23 @@ export class AuthController {
     return await this.authService.resetPasswordToken(token,resetPasswordDto);
   }
 
-  
+  @Get('send-verification/:email')
+  @ApiResponse({ status: 200, description: 'Email send', type: Boolean })
+  @ApiResponse({ status: 401, description: 'Email does not exist' })
+  public async sendValidationEmail(
+    @Param('email') email: string
+    ) {
+    return await this.authService.sendEmailVerification(email);
+  }
+
+  @Get('verify-email/:token')
+  @ApiResponse({ status: 200, description: 'User email validation successfully', type: User })
+  @ApiResponse({ status: 401, description: 'Token is not valid' })
+  public async verifyEmailToken(
+    @Param('token') token: string
+  ) {
+    return await this.authService.verifyEmailToken(token);
+  }
 
   @ApiResponse({status:201, description:'Access to private site',type:User})
   @ApiResponse({status:401, description:'Bearer token is not valid'})
